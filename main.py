@@ -142,7 +142,7 @@ def run_train_test_splitting(feature_file, survival_file, test_frac: float = 0.3
     train_df = get_deep_feature_hazard_df(deep_feature,
                                           hazard,
                                           train_sample_name)
-    train_df.to_csv("./data/dss_results/ae_train_deep_dss.csv", index=False)
+    train_df.to_csv("./data/os_results/ae_train_deep_os.csv", index=False)
     # deep features of test data
 
     # for cox model
@@ -162,7 +162,7 @@ def run_train_test_splitting(feature_file, survival_file, test_frac: float = 0.3
     test_df = get_deep_feature_hazard_df(deep_feature,
                                          hazard,
                                          test_sample_name)
-    test_df.to_csv("./data/dss_results/ae_test_deep_dss.csv", index=False)
+    test_df.to_csv("./data/os_results/ae_test_deep_os.csv", index=False)
     return 0
 
 
@@ -195,7 +195,7 @@ def run_whole(feature_file, survival_file):
 
     print(trained_model)
     print("training is over")
-    trained_model.save_weights("./data/os_results/cox_ae_weights_train_GSE39582.ckpt")
+    trained_model.save_weights("./data/os_results/cox_ae_weights_train.ckpt")
     print("training is over and the weights are saved.")
     output, deep_feature, hazard, event_batch, r_batch = trained_model(x_input,
                                                                        y_input)
@@ -203,7 +203,7 @@ def run_whole(feature_file, survival_file):
     whole_deep_df = get_deep_feature_hazard_df(deep_feature,
                                                hazard,
                                                whole_index)
-    whole_deep_df.to_csv("./data/os_results/ae_whole_deep_GSE39582.csv", index=False)
+    whole_deep_df.to_csv("./data/os_results/ae_whole_deep.csv", index=False)
     return 0
 
 
@@ -231,21 +231,12 @@ def plot_tSNE(m_file):
 
 if __name__ == '__main__':
     features_file = "./data/cox_selected_features.csv"
-    # survival_file_os = "./data/os.csv"
-    survival_file_dss = "./data/dss.csv"
+    survival_file_os = "./data/os.csv"
 
-    # GSE39582
-    # features_file = "./data/cox_selected_features_GSE39582.csv"
-    # survival_file_os = "./data/GSE39582_os.csv"
-    #run_whole(features_file, survival_file_os)
-    # run_train_test_splitting(features_file, survival_file_dss)
-    # plot_tSNE("./data/dss_results/ae_test_deep_dss.csv")
 
-    # survival_file_pfi = "./data/pfi.csv"
     #run_whole(features_file, survival_file_os)
     #run_train_test_splitting(features_file, survival_file_os)
-    #run_train_test_splitting(mRNA_features_file, survival_file_os)
-    #plot_tSNE("./data/os_results/ae_test_deep.csv")
+    plot_tSNE("./data/os_results/ae_test_deep.csv")
 
     m_data = Dataset(features_file, survival_file_dss)
     print(m_data.get_sample_num())

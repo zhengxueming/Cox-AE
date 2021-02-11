@@ -183,7 +183,5 @@ class Dataset(object):
 if __name__ == "__main__":
     feature_file = "./data/cox_selected_features.csv"
     survival_file_os = "./data/os.csv"
-    survival_file_dss = "./data/dss.csv"
-    survival_file_pfi = "./data/pfi.csv"
     my_dataset = Dataset(feature_file, survival_file_os)
     print(my_dataset.get_event_number())
